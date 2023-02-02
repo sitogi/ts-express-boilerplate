@@ -1,4 +1,5 @@
 import express from 'express';
+
 import { getUser, getUsers } from './handlers/users';
 
 const app = express();

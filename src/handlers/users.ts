@@ -5,9 +5,8 @@ const users = [
   { id: 2, name: 'bob' },
 ];
 
-
 export const getUser = async (req: Request<{ id: string }>) => {
-  return users.find(u => String(u.id) === req.params.id);
+  return users.find((u) => String(u.id) === req.params.id);
 };
 
 export const getUsers = async () => {
