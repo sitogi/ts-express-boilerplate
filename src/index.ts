@@ -5,7 +5,14 @@ import { createUser, deleteUser, getUser, getUsers, updateUser } from './handler
 
 const app = express();
 
-app.use(pino());
+app.use(
+  pino({
+    level: process.env.LOG_LEVEL || 'info',
+    formatters: {
+      level: (label) => ({ level: label }),
+    },
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
