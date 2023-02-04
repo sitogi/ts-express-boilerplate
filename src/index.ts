@@ -1,8 +1,27 @@
+import http from 'http';
+
 import express from 'express';
+import { Server } from 'socket.io';
 
 import { createUser, deleteUser, getUser, getUsers, updateUser } from './handlers/users';
 
+// see: https://github.com/socketio/socket.io#in-conjunction-with-express
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://127.0.0.1:5173', // vite default
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('on connection');
+  socket.on('event', (data) => console.log(data));
+  socket.on('disconnect', () => console.log('disconnect'));
+  socket.on('sendMessage', (message) => {
+    io.emit('receiveMessage', message);
+  });
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -62,6 +81,7 @@ app.delete('/user/:id', async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Express listening on port ' + (process.env.PORT || 3000));
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log('Express listening on port ' + port);
 });
