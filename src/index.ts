@@ -1,9 +1,11 @@
 import express from 'express';
+import { pinoHttp as pino } from 'pino-http';
 
 import { createUser, deleteUser, getUser, getUsers, updateUser } from './handlers/users';
 
 const app = express();
 
+app.use(pino());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
