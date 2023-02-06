@@ -9,7 +9,11 @@
     "clean": "rimraf dist",
     "tsc": "tsc",
     "build": "npm-run-all clean tsc",
-    "start": "node ."
+    "start": "node .",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "prisma:dev": "run-s -l prisma:generate prisma:migrate prisma:seed"
   },
   "author": "",
   "license": "ISC",
